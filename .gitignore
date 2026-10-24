@@ -4,6 +4,7 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .cache/
+.mplconfig/
 .ipynb_checkpoints/
 
 # Oxford-IIIT Pet is downloaded by `uv run synth-data`; only the split is tracked.

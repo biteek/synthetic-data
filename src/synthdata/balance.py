@@ -7,6 +7,7 @@ Both functions are yours to write; `uv run synth-train --method oversample` or
 import random
 
 from PIL import Image
+from torchvision import transforms
 
 
 def oversample(
@@ -18,7 +19,22 @@ def oversample(
     may repeat. Repeat the photos as evenly as possible and use `rng` for every
     random choice, so a run can be reproduced from its seed.
     """
-    raise NotImplementedError("write it in src/synthdata/balance.py (Meeting 1)")
+    full_repeats = budget // len(minority_photos)
+    remainder = budget % len(minority_photos)
+    chosen = list(minority_photos) * full_repeats
+    if remainder > 0:
+        chosen.extend(rng.sample(minority_photos, remainder))
+    rng.shuffle(chosen)
+    return chosen
+
+
+AUGMENT_TRANSFORMS = transforms.Compose(
+    [
+        transforms.RandomRotation(degrees=15),
+        transforms.RandomPerspective(distortion_scale=0.2, p=0.5),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.05),
+    ]
+)
 
 
 def augment(image: Image.Image) -> Image.Image:
@@ -28,4 +44,4 @@ def augment(image: Image.Image) -> Image.Image:
     epoch sees a new variant. Typical choices are crops, flips, rotations, and
     colour changes from `torchvision.transforms`. Keep the cat recognisable.
     """
-    raise NotImplementedError("write it in src/synthdata/balance.py (Meeting 1)")
+    return AUGMENT_TRANSFORMS(image)
