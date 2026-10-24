@@ -1,4 +1,4 @@
-# Synthetic Data Generation with Diffusion Models
+# Bartłomiej Cichy - Synthetic Data Generation with Diffusion Models
 
 Starter repository for the course
 [Synthetic Data Generation with Diffusion Models](https://patrykbart.github.io/teaching/synthetic-data-generation-with-diffusion-models/).
